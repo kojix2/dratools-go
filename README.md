@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/kojix2/dratools-go/actions/workflows/ci.yml/badge.svg)](https://github.com/kojix2/dratools-go/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Lines of Code](https://img.shields.io/endpoint?url=https%3A%2F%2Ftokei.kojix2.net%2Fbadge%2Fgithub%2Fkojix2%2Fdratools-go%2Flines)](https://tokei.kojix2.net/github/kojix2/dratools-go)
 
 `dratools-go` は、DDBJ Search API を使って DRA/SRA 関連 accession から
 ダウンロード URL や run accession を解決するコマンドラインツールです。
