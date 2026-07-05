@@ -27,3 +27,16 @@ func TestProgressBytes(t *testing.T) {
 		t.Fatalf("progressBytes = %q, want 1.0 KiB/2.0 KiB", got)
 	}
 }
+
+func TestFileProgressLabelTruncatesLongNames(t *testing.T) {
+	got := fileProgressLabel("/tmp/very-long-download-file-name-DRR000001.fastq.gz")
+	if len([]rune(got)) > progressLabelMaxSize {
+		t.Fatalf("label length = %d, want <= %d: %q", len([]rune(got)), progressLabelMaxSize, got)
+	}
+	if !strings.HasPrefix(got, "…") {
+		t.Fatalf("label = %q, want leading ellipsis", got)
+	}
+	if !strings.HasSuffix(got, "DRR000001.fastq.gz") {
+		t.Fatalf("label = %q, want useful filename suffix", got)
+	}
+}

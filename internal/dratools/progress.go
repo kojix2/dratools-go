@@ -11,9 +11,15 @@ import (
 	grab "github.com/cavaliergopher/grab/v3"
 )
 
-const progressBarWidth = 24
+const (
+	progressBarWidth     = 12
+	progressLabelMaxSize = 24
+)
 
 func interactiveWriter(w io.Writer) bool {
+	if os.Getenv("TERM") == "dumb" {
+		return false
+	}
 	file, ok := w.(*os.File)
 	if !ok {
 		return false
@@ -27,7 +33,7 @@ func (s *DownloadService) waitForDownload(resp *grab.Response, outputPath string
 		return resp.Err()
 	}
 
-	ticker := time.NewTicker(200 * time.Millisecond)
+	ticker := time.NewTicker(500 * time.Millisecond)
 	defer ticker.Stop()
 
 	s.printDownloadProgress(resp, outputPath, attempt)
@@ -54,18 +60,17 @@ func (s *DownloadService) printDownloadProgress(resp *grab.Response, outputPath 
 	}
 	fmt.Fprintf(
 		s.ProgressOutput,
-		"\r\033[K%s %s %s %s %s/s",
+		"\r\033[2K%s %s %s %s/s",
 		status,
 		fileProgressLabel(outputPath),
 		progressBar(done, size),
-		progressBytes(done, size),
 		formatBytes(int64(resp.BytesPerSecond())),
 	)
 }
 
 func (s *DownloadService) clearDownloadProgress() {
 	if s.ProgressOutput != nil {
-		fmt.Fprint(s.ProgressOutput, "\r\033[K")
+		fmt.Fprint(s.ProgressOutput, "\r\033[2K")
 	}
 }
 
@@ -93,7 +98,14 @@ func progressBytes(done, size int64) string {
 func fileProgressLabel(path string) string {
 	label := filepath.Base(path)
 	if label == "." || label == string(filepath.Separator) || label == "" {
-		return path
+		label = path
 	}
-	return label
+	runes := []rune(label)
+	if len(runes) <= progressLabelMaxSize {
+		return label
+	}
+	if progressLabelMaxSize <= 1 {
+		return string(runes[:progressLabelMaxSize])
+	}
+	return "…" + string(runes[len(runes)-progressLabelMaxSize+1:])
 }
