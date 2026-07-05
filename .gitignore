@@ -1,0 +1,41 @@
+# Build artifacts
+/dratools
+/dratools-go
+/dist/
+/bin/
+
+# Go test and coverage output
+*.test
+*.out
+coverage.*
+
+# Downloaded sequencing data and local output
+/downloads/
+*.sra
+*.fastq
+*.fastq.gz
+
+# Local caches and temporary files
+/.cache/
+/.tmp/
+/tmp/
+*.tmp
+*.log
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# External reference checkout used during porting/API validation.
+# The Ruby reference implementation lives in dratools-ruby/ and is intentionally
+# not ignored.
+/ddbj-search-api/

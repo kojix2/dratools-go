@@ -1,0 +1,3 @@
+[submodule "dratools-ruby"]
+	path = dratools-ruby
+	url = https://github.com/kojix2/dratools
