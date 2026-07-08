@@ -60,7 +60,8 @@ func (s *DownloadService) printDownloadProgress(resp *grab.Response, outputPath 
 	}
 	fmt.Fprintf(
 		s.ProgressOutput,
-		"\r\033[2K%s %s %s %s/s",
+		"\r\033[2K%s %s %s %s %s/s",
+		MessagePrefix,
 		status,
 		fileProgressLabel(outputPath),
 		progressBar(done, size),

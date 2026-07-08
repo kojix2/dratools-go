@@ -72,21 +72,21 @@ func (a *app) run(argv []string) int {
 	case "get":
 		err = a.runGet(argv[1:])
 	default:
-		fmt.Fprintf(a.stderr, "%s: unknown command '%s' (expected: url, get, probe, tree, meta, runs, size)\n", Name, argv[0])
+		fmt.Fprintf(a.stderr, "%s unknown command '%s' (expected: url, get, probe, tree, meta, runs, size)\n", MessagePrefix, argv[0])
 		return 1
 	}
 	if err != nil {
 		if _, ok := err.(reportedErrors); ok {
 			return 1
 		}
-		fmt.Fprintf(a.stderr, "%s %s: %v\n", Name, name, err)
+		fmt.Fprintf(a.stderr, "%s %s: %v\n", MessagePrefix, name, err)
 		return 1
 	}
 	return 0
 }
 
 func (a *app) reportAccessionError(command, accession string, err error) {
-	fmt.Fprintf(a.stderr, "%s %s: %s: %v\n", Name, command, strings.ToUpper(accession), err)
+	fmt.Fprintf(a.stderr, "%s %s: %s: %v\n", MessagePrefix, command, strings.ToUpper(accession), err)
 }
 
 func (a *app) printHelp(w io.Writer) {
@@ -635,14 +635,14 @@ func (a *app) runGet(argv []string) error {
 			}
 			if result.Skipped {
 				skipped++
-				fmt.Fprintf(a.stderr, "Skipped\t%s\n", result.Path)
+				fmt.Fprintf(a.stderr, "%s skipped\t%s\n", MessagePrefix, result.Path)
 			} else {
 				downloaded++
-				fmt.Fprintf(a.stderr, "Downloaded\t%s\n", result.Path)
+				fmt.Fprintf(a.stderr, "%s downloaded\t%s\n", MessagePrefix, result.Path)
 			}
 		}
 	}
-	fmt.Fprintf(a.stderr, "%s get: %d downloaded, %d skipped", Name, downloaded, skipped)
+	fmt.Fprintf(a.stderr, "%s get: %d downloaded, %d skipped", MessagePrefix, downloaded, skipped)
 	if failed > 0 {
 		fmt.Fprintf(a.stderr, ", %d failed", failed)
 	}

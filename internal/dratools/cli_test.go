@@ -30,7 +30,7 @@ func TestRunURLContinuesAfterAccessionFailure(t *testing.T) {
 	if got := strings.Split(strings.TrimSpace(stdout.String()), "\n"); !reflect.DeepEqual(got, wantLines) {
 		t.Fatalf("stdout lines = %#v, want %#v\nstdout:\n%s", got, wantLines, stdout.String())
 	}
-	if got := stderr.String(); !strings.Contains(got, "dratools url: DRR000002:") {
+	if got := stderr.String(); !strings.Contains(got, "[dratools] url: DRR000002:") {
 		t.Fatalf("stderr does not include accession-scoped error:\n%s", got)
 	}
 	if strings.Contains(stderr.String(), "one or more accessions failed") {
@@ -58,7 +58,7 @@ func TestRunURLJSONWritesSuccessfulAccessionsWhenLaterAccessionFails(t *testing.
 	if len(candidates) != 1 || candidates[0].RunAccession != "DRR000001" {
 		t.Fatalf("candidates = %#v, want one DRR000001 candidate", candidates)
 	}
-	if got := stderr.String(); !strings.Contains(got, "dratools url: DRR000002:") {
+	if got := stderr.String(); !strings.Contains(got, "[dratools] url: DRR000002:") {
 		t.Fatalf("stderr does not include accession-scoped error:\n%s", got)
 	}
 }
