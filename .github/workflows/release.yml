@@ -23,6 +23,8 @@ jobs:
             goarch: amd64
           - goos: darwin
             goarch: arm64
+          - goos: windows
+            goarch: amd64
 
     steps:
       - uses: actions/checkout@v7
@@ -40,7 +42,11 @@ jobs:
         run: |
           name="dratools-${GITHUB_REF_NAME}-${GOOS}-${GOARCH}"
           mkdir -p "dist/${name}"
-          go build -o "dist/${name}/dratools" ./cmd/dratools
+          bin="dratools"
+          if [ "${GOOS}" = "windows" ]; then
+            bin="dratools.exe"
+          fi
+          go build -o "dist/${name}/${bin}" ./cmd/dratools
           cp README.md "dist/${name}/"
           cp LICENSE "dist/${name}/"
           tar -C dist -czf "dist/${name}.tar.gz" "${name}"
