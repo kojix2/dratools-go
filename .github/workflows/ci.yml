@@ -11,6 +11,9 @@ permissions:
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
     strategy:
       fail-fast: false
       matrix:
@@ -20,6 +23,8 @@ jobs:
           - os: ubuntu-latest
             go: "1.x"
           - os: macos-latest
+            go: "1.x"
+          - os: windows-latest
             go: "1.x"
 
     steps:
