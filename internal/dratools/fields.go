@@ -3,7 +3,7 @@ package dratools
 const (
 	Name          = "dratools"
 	MessagePrefix = "[" + Name + "]"
-	Version       = "0.0.1"
+	Version       = "0.0.2"
 
 	SRARunResourceType        = "sra-run"
 	SRAExperimentResourceType = "sra-experiment"
