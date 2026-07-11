@@ -26,6 +26,7 @@ coverage.*
 .env
 .env.*
 !.env.example
+mise.toml
 
 # Editor and OS files
 .DS_Store
